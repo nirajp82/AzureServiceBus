@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-
 using System;
 using System.Text;
 
@@ -48,11 +47,5 @@ namespace Message.Sender
                         .AddUserSecrets<Program>()
                         .Build();
         }
-    }
-
-    class ServiceBusConfig
-    {
-        public string ConnectionString { get; set; }
-        public string QueueName { get; set; }
     }
 }
