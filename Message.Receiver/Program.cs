@@ -20,7 +20,7 @@ namespace Message.Receiver
         private static void ProcessMessages(ServiceBusConfig serviceBusConfig)
         {
             QueueClient queueClient = new QueueClient(serviceBusConfig.ConnectionString, serviceBusConfig.QueueName);
-            queueClient.RegisterMessageHandler(MessageHandlerAsync, ExceptionHanderAsync);
+            queueClient.RegisterMessageHandler(MessageHandlerAsync, ExceptionHandlerAsync);
             Console.ReadLine();
             queueClient.CloseAsync().Wait();
             Console.WriteLine("Messages are Processed");
@@ -31,7 +31,7 @@ namespace Message.Receiver
             Console.WriteLine(Encoding.UTF8.GetString(msg.Body));
         }
 
-        private static async Task ExceptionHanderAsync(ExceptionReceivedEventArgs arg)
+        private static async Task ExceptionHandlerAsync(ExceptionReceivedEventArgs arg)
         {
             Console.WriteLine(arg.ToString());
         }
