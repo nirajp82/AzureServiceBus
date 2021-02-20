@@ -14,4 +14,8 @@
 		<PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="5.0.0" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.1" />
 	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\..\AzureServiceBus.Entity\MessageEntity\MessageEntity.csproj" />
+	</ItemGroup>
 </Project>

@@ -1,9 +1,11 @@
-﻿using Microsoft.Azure.ServiceBus;
+﻿using MessageEntity;
+using Microsoft.Azure.ServiceBus;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 using System;
 using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -17,7 +19,7 @@ namespace Message.Receiver
             ProcessMessages(serviceBusConfig);
         }
 
-        private static void ProcessMessages(ServiceBusConfig serviceBusConfig)
+        static void ProcessMessages(ServiceBusConfig serviceBusConfig)
         {
             QueueClient queueClient = new QueueClient(serviceBusConfig.ConnectionString, serviceBusConfig.QueueName);
             queueClient.RegisterMessageHandler(MessageHandlerAsync, ExceptionHandlerAsync);
@@ -26,17 +28,36 @@ namespace Message.Receiver
             Console.WriteLine("Messages are Processed");
         }
 
-        private static async Task MessageHandlerAsync(Microsoft.Azure.ServiceBus.Message msg, CancellationToken token)
+        static async Task MessageHandlerAsync(Microsoft.Azure.ServiceBus.Message msg, CancellationToken token)
         {
-            Console.WriteLine(Encoding.UTF8.GetString(msg.Body));
+            if (msg.Label == "NewPizzaOrder")
+                await ProcessPizzaOrderMessages(msg);
+            else if (msg.Label == "ControlMessage_MessageWithoutBody")
+                await ProcessControlMessages(msg);
+            else
+                Console.WriteLine(Encoding.UTF8.GetString(msg.Body));
         }
 
-        private static async Task ExceptionHandlerAsync(ExceptionReceivedEventArgs arg)
+        static async Task ProcessPizzaOrderMessages(Microsoft.Azure.ServiceBus.Message msg)
+        {
+            PizzaOrder pizzaOrder = JsonSerializer.Deserialize<PizzaOrder>(Encoding.UTF8.GetString(msg.Body));
+            Console.WriteLine(pizzaOrder.ToString(), ConsoleColor.Green);
+        }
+
+        static async Task ProcessControlMessages(Microsoft.Azure.ServiceBus.Message msg)
+        {
+            foreach (var item in msg.UserProperties)
+            {
+                Console.WriteLine($"{item.Key}- {item.Value}");
+            }
+        }
+
+        static async Task ExceptionHandlerAsync(ExceptionReceivedEventArgs arg)
         {
             Console.WriteLine(arg.ToString());
         }
 
-        private static ServiceBusConfig InitServiceBusConfig()
+        static ServiceBusConfig InitServiceBusConfig()
         {
             IConfigurationRoot config = BuildConfiguration();
             var serviceBusSection = config.GetSection("ServiceBus");
@@ -44,7 +65,7 @@ namespace Message.Receiver
             return serviceBusConfig;
         }
 
-        private static IConfigurationRoot BuildConfiguration()
+        static IConfigurationRoot BuildConfiguration()
         {
             return new ConfigurationBuilder()
                         .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
