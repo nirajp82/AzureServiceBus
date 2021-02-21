@@ -16,6 +16,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\AzureServiceBus.Entity\MessageEntity\MessageEntity.csproj" />
+	  <ProjectReference Include="..\MessageEntity\MessageEntity.csproj" />
 	</ItemGroup>
 </Project>

@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChatApp", "ChatApp.Console\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceBus.Management", "ServiceBusManagement\ServiceBus.Management.csproj", "{15726319-BE19-4DB5-8F94-18D3413446CF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessageEntity", "..\AzureServiceBus.Entity\MessageEntity\MessageEntity.csproj", "{100354DC-AA4B-4C90-B261-61286EED00FA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MessageEntity", "MessageEntity\MessageEntity.csproj", "{B3FB5161-1210-4D29-8B3F-B9EA031ACC3A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,10 +41,10 @@ Global
 		{15726319-BE19-4DB5-8F94-18D3413446CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{15726319-BE19-4DB5-8F94-18D3413446CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{15726319-BE19-4DB5-8F94-18D3413446CF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{100354DC-AA4B-4C90-B261-61286EED00FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{100354DC-AA4B-4C90-B261-61286EED00FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{100354DC-AA4B-4C90-B261-61286EED00FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{100354DC-AA4B-4C90-B261-61286EED00FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3FB5161-1210-4D29-8B3F-B9EA031ACC3A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3FB5161-1210-4D29-8B3F-B9EA031ACC3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3FB5161-1210-4D29-8B3F-B9EA031ACC3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3FB5161-1210-4D29-8B3F-B9EA031ACC3A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
