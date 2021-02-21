@@ -59,7 +59,7 @@ namespace Message.Sender
                 string itemJson = JsonSerializer.Serialize(rfidTag);
                 var message = new Microsoft.Azure.ServiceBus.Message(Encoding.UTF8.GetBytes(itemJson));
                 message.Label = "RFID_Demo";
-                //Required to find duplicate message
+                //Required to find duplicate message detection.
                 message.MessageId = rfidTag.TagId;
                 await queueClient.SendAsync(message);
                 Console.WriteLine($"Sent: {rfidTag.Product} ");
