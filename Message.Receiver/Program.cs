@@ -13,10 +13,43 @@ namespace Message.Receiver
 {
     class Program
     {
-        static void Main(string[] args)
+        static readonly QueueClient _queueClient = null;
+        static readonly ServiceBusConfig _serviceBusConfig = null;
+
+        static Program()
         {
             ServiceBusConfig serviceBusConfig = InitServiceBusConfig();
-            ProcessMessages(serviceBusConfig);
+            _queueClient = new QueueClient(serviceBusConfig.ConnectionString, serviceBusConfig.QueueName);
+        }
+
+        static void Main()
+        {
+            ProcessMessageWithOptions();
+        }
+
+        static void ProcessMessageWithOptions()
+        {
+            var options = new MessageHandlerOptions(ExceptionHandlerAsync)
+            {
+                AutoComplete = false,
+                MaxConcurrentCalls = 5,
+                MaxAutoRenewDuration = TimeSpan.FromMinutes(10)
+            };
+            _queueClient.RegisterMessageHandler(MessageHandlerWithOptionsAsync, options);
+            Console.ReadLine();
+            _queueClient.CloseAsync().Wait();
+            Console.WriteLine("Messages are Processed");
+        }
+
+        static async Task MessageHandlerWithOptionsAsync(Microsoft.Azure.ServiceBus.Message msg, CancellationToken token)
+        {
+            if (msg.Label == "NewPizzaOrder")
+                await ProcessPizzaOrderMessages(msg);
+            else if (msg.Label == "ControlMessage_MessageWithoutBody")
+                await ProcessControlMessages(msg);
+            else
+                Console.WriteLine(Encoding.UTF8.GetString(msg.Body));
+            await _queueClient.CompleteAsync(msg.SystemProperties.LockToken);
         }
 
         static void ProcessMessages(ServiceBusConfig serviceBusConfig)
@@ -41,7 +74,10 @@ namespace Message.Receiver
         static async Task ProcessPizzaOrderMessages(Microsoft.Azure.ServiceBus.Message msg)
         {
             PizzaOrder pizzaOrder = JsonSerializer.Deserialize<PizzaOrder>(Encoding.UTF8.GetString(msg.Body));
-            Console.WriteLine(pizzaOrder.ToString(), ConsoleColor.Green);
+            //Cook Pizza
+            Console.WriteLine($"Cooking {pizzaOrder.Size} {pizzaOrder.Type} Pizza for {pizzaOrder.CustomerName}");
+            Thread.Sleep(2000);
+            Console.WriteLine($"   {pizzaOrder.Size} {pizzaOrder.Type} Pizza for {pizzaOrder.CustomerName} is ready!");
         }
 
         static async Task ProcessControlMessages(Microsoft.Azure.ServiceBus.Message msg)
