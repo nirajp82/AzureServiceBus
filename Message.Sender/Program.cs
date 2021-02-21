@@ -16,11 +16,20 @@ namespace Message.Sender
     {
         static void Main()
         {
-            ServiceBusConfig serviceBusConfig = InitServiceBusConfig();
-            //SendTextMessages(serviceBusConfig);
-            SendPizzaOrderAsync(serviceBusConfig).Wait();
-            SendControlMessageAsync(serviceBusConfig).Wait();
-            Console.WriteLine("Messages are sent");
+            try
+            {
+                RfidDupMsgSender.Start().Wait();
+                //ServiceBusConfig serviceBusConfig = InitServiceBusConfig();
+                ////SendTextMessages(serviceBusConfig);
+                //SendPizzaOrderAsync(serviceBusConfig).Wait();
+                //SendControlMessageAsync(serviceBusConfig).Wait();
+                Console.WriteLine("Messages are sent");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            Console.ReadLine();
         }
 
         static async Task SendControlMessageAsync(ServiceBusConfig serviceBusConfig)
@@ -90,7 +99,7 @@ namespace Message.Sender
             queueClient.CloseAsync().Wait();
         }
 
-        private static ServiceBusConfig InitServiceBusConfig()
+        public static ServiceBusConfig InitServiceBusConfig()
         {
             IConfigurationRoot config = BuildConfiguration();
             var serviceBusSection = config.GetSection("ServiceBus");

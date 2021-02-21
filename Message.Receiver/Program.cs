@@ -14,17 +14,28 @@ namespace Message.Receiver
     class Program
     {
         static readonly QueueClient _queueClient = null;
-        static readonly ServiceBusConfig _serviceBusConfig = null;
 
         static Program()
         {
+
             ServiceBusConfig serviceBusConfig = InitServiceBusConfig();
             _queueClient = new QueueClient(serviceBusConfig.ConnectionString, serviceBusConfig.QueueName);
+
         }
 
         static void Main()
         {
-            ProcessMessageWithOptions();
+            try
+            {
+                RfidDupMsgReceiver.Start();
+                //ProcessMessageWithOptions();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            Console.WriteLine("Completed");
+            //Console.ReadLine();
         }
 
         static void ProcessMessageWithOptions()
@@ -93,7 +104,7 @@ namespace Message.Receiver
             Console.WriteLine(arg.ToString());
         }
 
-        static ServiceBusConfig InitServiceBusConfig()
+        public static ServiceBusConfig InitServiceBusConfig()
         {
             IConfigurationRoot config = BuildConfiguration();
             var serviceBusSection = config.GetSection("ServiceBus");
