@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceBus.Management", "Se
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MessageEntity", "MessageEntity\MessageEntity.csproj", "{B3FB5161-1210-4D29-8B3F-B9EA031ACC3A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceBusTopicSubscriptionFilter", "TopicSubscriptionFilter\ServiceBusTopicSubscriptionFilter\ServiceBusTopicSubscriptionFilter.csproj", "{15A08D90-76E1-4FD5-8F14-244C66FD6141}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{B3FB5161-1210-4D29-8B3F-B9EA031ACC3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B3FB5161-1210-4D29-8B3F-B9EA031ACC3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B3FB5161-1210-4D29-8B3F-B9EA031ACC3A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15A08D90-76E1-4FD5-8F14-244C66FD6141}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15A08D90-76E1-4FD5-8F14-244C66FD6141}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15A08D90-76E1-4FD5-8F14-244C66FD6141}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15A08D90-76E1-4FD5-8F14-244C66FD6141}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

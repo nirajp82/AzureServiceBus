@@ -47,8 +47,10 @@ namespace ChatApp
             receiverClient.RegisterMessageHandler(ProcessMessagesAsync, ExceptionHandlerAsync);
 
             //Send a message
-            var helloMessage = new Message(Encoding.UTF8.GetBytes("Has entered the room..."));
-            helloMessage.Label = userName;
+            var helloMessage = new Message(Encoding.UTF8.GetBytes("Has entered the room..."))
+            {
+                Label = userName
+            };
             senderClient.SendAsync(helloMessage).Wait();
 
             while (true)
@@ -57,13 +59,17 @@ namespace ChatApp
                 if (text.Equals("exit"))
                     break;
 
-                var chatMessage = new Message(Encoding.UTF8.GetBytes(text));
-                chatMessage.Label = userName;
+                var chatMessage = new Message(Encoding.UTF8.GetBytes(text))
+                {
+                    Label = userName
+                };
                 senderClient.SendAsync(chatMessage).Wait();
             }
 
-            var byeMessage = new Message(Encoding.UTF8.GetBytes("Has left the building..."));
-            byeMessage.Label = userName;
+            var byeMessage = new Message(Encoding.UTF8.GetBytes("Has left the building..."))
+            {
+                Label = userName
+            };
             senderClient.SendAsync(byeMessage).Wait();
 
             senderClient.CloseAsync().Wait();

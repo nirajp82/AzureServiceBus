@@ -82,26 +82,29 @@ namespace Message.Receiver
                 Console.WriteLine(Encoding.UTF8.GetString(msg.Body));
         }
 
-        static async Task ProcessPizzaOrderMessages(Microsoft.Azure.ServiceBus.Message msg)
+        static Task ProcessPizzaOrderMessages(Microsoft.Azure.ServiceBus.Message msg)
         {
             PizzaOrder pizzaOrder = JsonSerializer.Deserialize<PizzaOrder>(Encoding.UTF8.GetString(msg.Body));
             //Cook Pizza
             Console.WriteLine($"Cooking {pizzaOrder.Size} {pizzaOrder.Type} Pizza for {pizzaOrder.CustomerName}");
             Thread.Sleep(2000);
             Console.WriteLine($"   {pizzaOrder.Size} {pizzaOrder.Type} Pizza for {pizzaOrder.CustomerName} is ready!");
+
+            return Task.CompletedTask;
         }
 
-        static async Task ProcessControlMessages(Microsoft.Azure.ServiceBus.Message msg)
+        static Task ProcessControlMessages(Microsoft.Azure.ServiceBus.Message msg)
         {
             foreach (var item in msg.UserProperties)
-            {
                 Console.WriteLine($"{item.Key}- {item.Value}");
-            }
+
+            return Task.CompletedTask;
         }
 
-        static async Task ExceptionHandlerAsync(ExceptionReceivedEventArgs arg)
+        static Task ExceptionHandlerAsync(ExceptionReceivedEventArgs arg)
         {
             Console.WriteLine(arg.ToString());
+            return Task.CompletedTask;
         }
 
         public static ServiceBusConfig InitServiceBusConfig()

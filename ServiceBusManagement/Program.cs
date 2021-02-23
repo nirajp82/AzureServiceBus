@@ -9,7 +9,7 @@ namespace ServiceBus.Management
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             ServiceBusConfig serviceBusConfig = InitServiceBusConfig();
             ManagementHelper helper = new ManagementHelper(serviceBusConfig.ConnectionString);

@@ -29,23 +29,7 @@ namespace Message.Sender
             QueueClient queueClient = new QueueClient(serviceBusConfig.ConnectionString, _queueName);
 
             //Items in Basket
-            RfidTag[] basket = new RfidTag[]
-            {
-                new RfidTag {Product = "Apples", Price = 1.99},
-                new RfidTag {Product = "Apricots", Price = 2.98},
-                new RfidTag {Product = "Avocados", Price = 3.97},
-                new RfidTag {Product = "Cantaloupe", Price = 4.96},
-                new RfidTag {Product = "Clementine", Price = 5.95},
-
-                new RfidTag {Product = "Huckleberry", Price = 6.81},
-                new RfidTag {Product = "Entawak", Price = 7.82},
-                new RfidTag {Product = "Eggfruit", Price = 4.83},
-                new RfidTag {Product = "Dewberries", Price = 4.84},
-                new RfidTag {Product = "Plum", Price = 2.85},
-
-                new RfidTag {Product = " Bing Cherry", Price = 1.73},
-            };
-
+            var basket = RfidTag.CreateBasket();
             Console.WriteLine($"Basket contains {basket.Length} items, Total cost: {basket.Sum(p => p.Price)}");
 
             int itemCnt = 0;
@@ -57,10 +41,12 @@ namespace Message.Sender
                 RfidTag rfidTag = basket[itemCnt];
 
                 string itemJson = JsonSerializer.Serialize(rfidTag);
-                var message = new Microsoft.Azure.ServiceBus.Message(Encoding.UTF8.GetBytes(itemJson));
-                message.Label = "RFID_Demo";
-                //Required to find duplicate message detection.
-                message.MessageId = rfidTag.TagId;
+                var message = new Microsoft.Azure.ServiceBus.Message(Encoding.UTF8.GetBytes(itemJson))
+                {
+                    Label = "RFID_Demo",
+                    //Required to find duplicate message detection.
+                    MessageId = rfidTag.TagId
+                };
                 await queueClient.SendAsync(message);
                 Console.WriteLine($"Sent: {rfidTag.Product} ");
 
