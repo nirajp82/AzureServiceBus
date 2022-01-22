@@ -1,7 +1,11 @@
-﻿namespace TopicsAndSubscription.Service
+﻿using System;
+using System.Threading.Tasks;
+
+namespace TopicsAndSubscription.Service
 {
-    public interface ICacheSynchronizerService
+    public interface ICacheSynchronizerService : IDisposable
     {
-        void Dispose();
+        Task StartAsync();
+        Task StopAsync();
     }
 }

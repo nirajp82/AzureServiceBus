@@ -11,16 +11,13 @@ namespace TopicsAndSubscription.Service.Controllers
     [Route("[controller]")]
     public class CacheController : ControllerBase
     {
-
         private readonly ILogger<CacheController> _logger;
         private readonly ICacheContainerService _cacheContainerService;
-        private readonly ICacheSynchronizerService _cacheSynchronizerService;
 
-        public CacheController(ILogger<CacheController> logger, ICacheContainerService cacheContainerService, ICacheSynchronizerService cacheSynchronizerService)
+        public CacheController(ILogger<CacheController> logger, ICacheContainerService cacheContainerService)
         {
             _logger = logger;
             _cacheContainerService = cacheContainerService;
-            _cacheSynchronizerService = cacheSynchronizerService;
         }
 
         [HttpGet]
