@@ -5,6 +5,7 @@ namespace TopicsAndSubscription.WebApp
 {
     public interface ICacheSynchronizerService: IDisposable
     {
+        Task CreateTopicAsync();
         Task SendSyncRequestAsync(string clientName);
     }
 }

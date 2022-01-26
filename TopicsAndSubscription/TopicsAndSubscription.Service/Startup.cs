@@ -35,17 +35,17 @@ namespace TopicsAndSubscription.Service
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, 
-            ICacheSynchronizerService _cacheSynchronizerService)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env,
+            ICacheSynchronizerService cacheSynchronizerService)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "TopicsAndSubscription.Service v1"));
-            }
+            //if (env.IsDevelopment())
+            //{
+            app.UseDeveloperExceptionPage();
+            app.UseSwagger();
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("v1/swagger.json", "TopicsAndSubscription.Service v1"));
+            //            }
 
-            _cacheSynchronizerService.StartAsync();
+            cacheSynchronizerService.StartAsync();
 
             app.UseRouting();
 

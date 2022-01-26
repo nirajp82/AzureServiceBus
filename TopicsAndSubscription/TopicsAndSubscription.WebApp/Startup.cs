@@ -38,7 +38,7 @@ namespace TopicsAndSubscription.WebApp
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ICacheSynchronizerService cacheSynchronizerService)
         {
             if (env.IsDevelopment())
             {
@@ -52,6 +52,8 @@ namespace TopicsAndSubscription.WebApp
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "TopicsAndSubscription.WebApp v1"));
 
             app.UseStaticFiles();
+
+            cacheSynchronizerService.CreateTopicAsync();
 
             app.UseRouting();
 

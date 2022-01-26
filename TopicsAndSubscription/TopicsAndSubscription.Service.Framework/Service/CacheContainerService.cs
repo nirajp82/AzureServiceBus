@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
+using System.Web;
 
-namespace TopicsAndSubscription.Service
+namespace TopicsAndSubscription.Service.Framework.Service
 {
-    public class CacheContainerService : ICacheContainerService
+    public class CacheContainerService
     {
         static object _cacheData = new { RefreshDate = DateTime.UtcNow.ToString(), ProcessId = Process.GetCurrentProcess().Id, Info = "Default" };
         static int _cnt = 1;
 
-        public void RefreshCache(string cacheRefreshRequest)
+        public static void RefreshCache(string cacheRefreshRequest)
         {
             _cacheData = new
             {
@@ -22,6 +22,6 @@ namespace TopicsAndSubscription.Service
             };
         }
 
-        public object GetCachedData() => _cacheData;
+        public static object GetCachedData() => _cacheData;
     }
 }
